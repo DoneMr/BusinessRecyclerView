@@ -6,6 +6,6 @@
 /.idea/modules.xml
 /.idea/workspace.xmlgit
 .DS_Store
-/buildgit
+/build
 /captures
 .externalNativeBuild
