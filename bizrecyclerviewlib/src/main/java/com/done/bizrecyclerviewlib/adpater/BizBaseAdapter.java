@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.done.bizrecyclerviewlib.BizRecyclerView;
 import com.done.bizrecyclerviewlib.Preconditions;
 import com.done.bizrecyclerviewlib.cell.IBizCell;
 import com.done.bizrecyclerviewlib.eventbus.BaseEventHandler;
@@ -26,6 +27,8 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
     private TypePool mTypePool;
 
     private BaseEventHandler mEventHandler;
+
+    private boolean isAnimate = false;
 
     public BizBaseAdapter() {
         this.mTypePool = new BizTypePool();
@@ -92,7 +95,9 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
+        if (recyclerView instanceof BizRecyclerView) {
+            isAnimate = ((BizRecyclerView) recyclerView).hasAnimate();
+        }
     }
 
     @Override
@@ -190,8 +195,14 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
     public void remove(int index) {
         mEventHandler.removeMessage(index);
         mTypePool.removeCell(index);
-        int itemCount = getItemCount() - index < 1 ? 1 : getItemCount() - index;
-        notifyItemRangeRemoved(index, itemCount);
+        if (isAnimate) {
+            //TODO 自定义一下动画实现对增删改动画的结束的监听
+//            notifyItemRangeRemoved(index, 1);
+            int itemCount = getItemCount() - index < 1 ? 1 : getItemCount() - index + 1;
+            notifyItemRangeRemoved(index, itemCount);
+        } else {
+            notifyDataSetChanged();
+        }
     }
 
     public void clear() {

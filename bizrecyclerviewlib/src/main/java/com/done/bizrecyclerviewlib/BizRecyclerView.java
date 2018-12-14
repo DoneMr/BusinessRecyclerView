@@ -2,17 +2,14 @@ package com.done.bizrecyclerviewlib;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import com.done.bizrecyclerviewlib.features.BaseBizTouchHelper;
 import com.done.bizrecyclerviewlib.features.BizSideScrollTouchHelper;
 
 /**
@@ -84,8 +81,13 @@ public class BizRecyclerView extends RecyclerView {
             mSimpleItemAnimator.setChangeDuration(CHANGE_ANIM_DURATION);
             mSimpleItemAnimator.setMoveDuration(MOVE_ANIM_DURATION);
             mSimpleItemAnimator.setRemoveDuration(REMOVE_ANIM_DURATION);
-            mSimpleItemAnimator.setSupportsChangeAnimations(false);
+            mSimpleItemAnimator.setSupportsChangeAnimations(true);
             setItemAnimator(mSimpleItemAnimator);
         }
+    }
+
+
+    public boolean hasAnimate() {
+        return hasAnimate;
     }
 }
