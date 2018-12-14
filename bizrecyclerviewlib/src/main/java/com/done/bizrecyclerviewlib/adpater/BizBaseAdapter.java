@@ -157,7 +157,8 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
         Preconditions.checkNotNull(cell);
         cell.setEventHandler(mEventHandler);
         mTypePool.addCell(pos, cell);
-        notifyItemRangeChanged(pos, getItemCount() - pos);
+        int itemCount = getItemCount() - pos < 1 ? 1 : getItemCount() - pos;
+        notifyItemRangeChanged(pos, itemCount);
     }
 
     public void addCells(List<Cell> cells) {
@@ -189,12 +190,18 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
     public void remove(int index) {
         mEventHandler.removeMessage(index);
         mTypePool.removeCell(index);
-        notifyItemRangeRemoved(index, getItemCount() - index);
+        int itemCount = getItemCount() - index < 1 ? 1 : getItemCount() - index;
+        notifyItemRangeRemoved(index, itemCount);
     }
 
     public void clear() {
         mTypePool.clear();
         notifyDataSetChanged();
+    }
+
+    public final boolean isSupportDelete(int viewType) {
+        IBizCell cellForType = mTypePool.getCellForType(viewType);
+        return cellForType != null && cellForType.isSupportDelete();
     }
 
     public IBizCell getCell(int pos) {

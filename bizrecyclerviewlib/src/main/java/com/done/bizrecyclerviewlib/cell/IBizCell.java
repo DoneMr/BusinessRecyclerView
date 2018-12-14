@@ -37,6 +37,8 @@ public interface IBizCell {
 
     int getPos();
 
+    boolean isSupportDelete();
+
     /**
      * 上层传递过来的消息发送者，此接口基类实现，与子类之间无关
      *

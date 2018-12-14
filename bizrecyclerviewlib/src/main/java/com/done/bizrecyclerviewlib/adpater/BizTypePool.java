@@ -1,6 +1,7 @@
 package com.done.bizrecyclerviewlib.adpater;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.done.bizrecyclerviewlib.Preconditions;
 import com.done.bizrecyclerviewlib.cell.IBizCell;
@@ -134,5 +135,17 @@ public final class BizTypePool implements TypePool {
     @Override
     public IBizCell getCell(int index) {
         return mCellList.get(index);
+    }
+
+    @Nullable
+    @Override
+    public IBizCell getCellForType(int viewType) {
+        for (IBizCell iBizCell : mCellList) {
+            //这里不需要计较是哪个位置中的cell，adapter只需要对应type的cell用以判断是否支持侧滑删除
+            if (viewType == mViewTypeHelper.getViewType(iBizCell.getClass())) {
+                return iBizCell;
+            }
+        }
+        return null;
     }
 }

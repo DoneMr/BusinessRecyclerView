@@ -3,10 +3,7 @@ package com.done.businessrecyclerview;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.done.bizrecyclerviewlib.cell.BaseBizCell;
 import com.done.bizrecyclerviewlib.holder.BizViewHolder;
@@ -19,35 +16,32 @@ import com.done.bizrecyclerviewlib.holder.BizViewHolder;
  * @date 2018/12/14
  */
 
-public class SenderCell extends BaseBizCell<ComnuicationViewModel> implements View.OnClickListener {
+public class DeleteCell extends BaseBizCell<ComnuicationViewModel> {
 
-    private static final String TAG = "SenderCell";
+    private static final String TAG = "ReceiverCell";
 
     private TextView mTvContent;
 
-    public SenderCell(ComnuicationViewModel data) {
+
+    public DeleteCell(ComnuicationViewModel data) {
         super(data);
     }
 
     @Override
     protected void binViewHolder(@NonNull BizViewHolder viewHolder, int position) {
-        viewHolder.setText(R.id.tv_title, getClass().getSimpleName() + ",pos:" + position, "#0000FF");
+        viewHolder.setText(R.id.tv_title, getClass().getSimpleName() + ",pos:" + position, "#AEAE00");
         viewHolder.setText(R.id.tv_content, mData.getContent());
         mTvContent = viewHolder.findViewById(R.id.tv_content);
-        mRootView.setOnClickListener(this);
-        mRootView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                String sendMsg = "我延时发了一条数据给其他cell";
-                postMessageDelay(mPos, sendMsg, 5 * 1000);
-                return true;
-            }
-        });
     }
 
     @Override
     protected void onRelease(@NonNull RecyclerView.ViewHolder holder) {
 
+    }
+
+    @Override
+    public boolean isSupportDelete() {
+        return true;
     }
 
     @Override
@@ -61,14 +55,7 @@ public class SenderCell extends BaseBizCell<ComnuicationViewModel> implements Vi
 
     @Override
     public int getLayoutId() {
-        return R.layout.cell_sender;
-    }
-
-    @Override
-    public void onClick(View v) {
-        String sendMsg = "我发了一条数据给其他cell";
-        postMessage(mPos, sendMsg);
-        ToastUtils.showToast(v.getContext(), sendMsg);
+        return R.layout.cell_delete;
     }
 
 }

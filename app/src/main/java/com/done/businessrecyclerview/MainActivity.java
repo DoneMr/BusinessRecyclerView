@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         final int viewId = v.getId();
         if (viewId == R.id.btn_test1) {
-            if (addStyle > 1) {
+            if (addStyle > 2) {
                 addStyle = 0;
             }
             if (addStyle == 0) {
@@ -52,13 +52,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mAdapter.add(new SenderCell(new ComnuicationViewModel()));
             } else if (addStyle == 1) {
                 List<NormalCell3> cell3s = new ArrayList<>();
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 3; i++) {
                     NormalCell3 cell3 = new NormalCell3(null);
                     cell3s.add(cell3);
                 }
                 mAdapter.addCells(cell3s);
             } else if (addStyle == 2) {
-                mAdapter.add(mAdapter.getItemCount() - 3, new NormalCell4(null));
+                mAdapter.add(new DeleteCell(new ComnuicationViewModel()));
             }
             addStyle++;
         } else if (viewId == R.id.btn_test2) {

@@ -1,6 +1,7 @@
 package com.done.bizrecyclerviewlib.adpater;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.done.bizrecyclerviewlib.cell.IBizCell;
 
@@ -99,5 +100,12 @@ public interface TypePool {
     @NonNull
     IBizCell getCell(int index);
 
-
+    /**
+     * 通过ViewType拿到指定的Cell
+     *
+     * @param viewType
+     * @return
+     */
+    @Nullable
+    IBizCell getCellForType(int viewType);
 }

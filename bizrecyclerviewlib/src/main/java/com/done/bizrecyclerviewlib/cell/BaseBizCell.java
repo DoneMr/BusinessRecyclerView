@@ -102,6 +102,11 @@ public abstract class BaseBizCell<T> implements IBizCell {
         mBaseEventHandler.obtainMessage(pos, BaseEventHandler.NOTIFY_ITEM, 0).sendToTarget();
     }
 
+    @Override
+    public boolean isSupportDelete() {
+        return false;
+    }
+
     protected abstract void binViewHolder(@NonNull BizViewHolder viewHolder, int position);
 
     protected abstract void onRelease(@NonNull RecyclerView.ViewHolder holder);

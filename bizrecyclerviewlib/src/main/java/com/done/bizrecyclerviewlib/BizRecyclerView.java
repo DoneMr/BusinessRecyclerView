@@ -1,12 +1,19 @@
 package com.done.bizrecyclerviewlib;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+
+import com.done.bizrecyclerviewlib.features.BaseBizTouchHelper;
+import com.done.bizrecyclerviewlib.features.BizSideScrollTouchHelper;
 
 /**
  * File: com.done.bizrecyclerviewlib.BizRecyclerView.java
@@ -22,10 +29,14 @@ public class BizRecyclerView extends RecyclerView {
 
     private SimpleItemAnimator mSimpleItemAnimator;
 
-    private static final long ADD_ANIM_DURAION = 200L;
-    private static final long REMOVE_ANIM_DURAION = 200L;
-    private static final long MOVE_ANIM_DURAION = 200L;
-    private static final long CHANGE_ANIM_DURAION = 200L;
+    private ItemTouchHelper mTouchHelper;
+
+    private static final long ADD_ANIM_DURATION = 200L;
+    private static final long REMOVE_ANIM_DURATION = 200L;
+    private static final long MOVE_ANIM_DURATION = 200L;
+    private static final long CHANGE_ANIM_DURATION = 200L;
+
+    private boolean hasAnimate = true;
 
     public BizRecyclerView(@NonNull Context context) {
         this(context, null);
@@ -42,12 +53,39 @@ public class BizRecyclerView extends RecyclerView {
 
     private void init(Context context, AttributeSet attrs) {
         mContext = context;
-        mSimpleItemAnimator = new DefaultItemAnimator();
-        mSimpleItemAnimator.setAddDuration(ADD_ANIM_DURAION);
-        mSimpleItemAnimator.setChangeDuration(CHANGE_ANIM_DURAION);
-        mSimpleItemAnimator.setMoveDuration(MOVE_ANIM_DURAION);
-        mSimpleItemAnimator.setRemoveDuration(REMOVE_ANIM_DURAION);
-        mSimpleItemAnimator.setSupportsChangeAnimations(false);
-        setItemAnimator(mSimpleItemAnimator);
+        if (attrs != null) {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BizRecyclerView);
+            hasAnimate = typedArray.getBoolean(R.styleable.BizRecyclerView_has_animate, true);
+            typedArray.recycle();
+        }
+        initAnimate();
+    }
+
+    @Override
+    public void setAdapter(@Nullable Adapter adapter) {
+        super.setAdapter(adapter);
+        if (adapter != null) {
+            initTouchHelper(adapter);
+        }
+    }
+
+    private void initTouchHelper(Adapter adapter) {
+        mTouchHelper = new ItemTouchHelper(new BizSideScrollTouchHelper(adapter));
+        mTouchHelper.attachToRecyclerView(this);
+    }
+
+    /**
+     * init default item animation
+     */
+    private void initAnimate() {
+        if (hasAnimate) {
+            mSimpleItemAnimator = new DefaultItemAnimator();
+            mSimpleItemAnimator.setAddDuration(ADD_ANIM_DURATION);
+            mSimpleItemAnimator.setChangeDuration(CHANGE_ANIM_DURATION);
+            mSimpleItemAnimator.setMoveDuration(MOVE_ANIM_DURATION);
+            mSimpleItemAnimator.setRemoveDuration(REMOVE_ANIM_DURATION);
+            mSimpleItemAnimator.setSupportsChangeAnimations(false);
+            setItemAnimator(mSimpleItemAnimator);
+        }
     }
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BizRecyclerView">
+        <!--是否有默认的装载动画，默认为true-->
+        <attr name="has_animate" format="boolean" />
+    </declare-styleable>
+</resources>
