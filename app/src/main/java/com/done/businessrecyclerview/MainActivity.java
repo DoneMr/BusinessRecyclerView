@@ -2,6 +2,7 @@ package com.done.businessrecyclerview;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRemove.setOnClickListener(this);
         mAdapter = new BizDefaultAdapter();
         mRvTest.setAdapter(mAdapter);
-        mRvTest.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRvTest.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
     }
 
     private int addStyle = 0;
@@ -55,10 +56,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for (int i = 0; i < 3; i++) {
                     NormalCell3 cell3 = new NormalCell3(null);
                     cell3s.add(cell3);
+                    mAdapter.add(new NormalCell4(null));
                 }
                 mAdapter.addCells(cell3s);
             } else if (addStyle == 2) {
-                mAdapter.add(new DeleteCell(new ComnuicationViewModel()));
+                mAdapter.add(1, new DeleteCell(new ComnuicationViewModel()));
             }
             addStyle++;
         } else if (viewId == R.id.btn_test2) {

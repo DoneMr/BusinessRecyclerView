@@ -10,6 +10,9 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
 
+import com.done.bizrecyclerviewlib.adpater.BizBaseAdapter;
+import com.done.bizrecyclerviewlib.adpater.BizDefaultAdapter;
+import com.done.bizrecyclerviewlib.features.BizDefaultAnimator;
 import com.done.bizrecyclerviewlib.features.BizSideScrollTouchHelper;
 
 /**
@@ -24,16 +27,9 @@ public class BizRecyclerView extends RecyclerView {
 
     private Context mContext;
 
-    private SimpleItemAnimator mSimpleItemAnimator;
-
-    private ItemTouchHelper mTouchHelper;
-
-    private static final long ADD_ANIM_DURATION = 200L;
-    private static final long REMOVE_ANIM_DURATION = 200L;
-    private static final long MOVE_ANIM_DURATION = 200L;
-    private static final long CHANGE_ANIM_DURATION = 200L;
-
     private boolean hasAnimate = true;
+
+    private RecyclerView.Adapter mAdapter;
 
     public BizRecyclerView(@NonNull Context context) {
         this(context, null);
@@ -55,34 +51,30 @@ public class BizRecyclerView extends RecyclerView {
             hasAnimate = typedArray.getBoolean(R.styleable.BizRecyclerView_has_animate, true);
             typedArray.recycle();
         }
-        initAnimate();
     }
 
     @Override
     public void setAdapter(@Nullable Adapter adapter) {
         super.setAdapter(adapter);
-        if (adapter != null) {
-            initTouchHelper(adapter);
-        }
+        mAdapter = adapter;
+        initAnimate();
     }
 
-    private void initTouchHelper(Adapter adapter) {
-        mTouchHelper = new ItemTouchHelper(new BizSideScrollTouchHelper(adapter));
-        mTouchHelper.attachToRecyclerView(this);
+    public boolean isHasAnimate() {
+        return hasAnimate;
+    }
+
+    public void setHasAnimate(boolean hasAnimate) {
+        this.hasAnimate = hasAnimate;
+        initAnimate();
     }
 
     /**
      * init default item animation
      */
     private void initAnimate() {
-        if (hasAnimate) {
-            mSimpleItemAnimator = new DefaultItemAnimator();
-            mSimpleItemAnimator.setAddDuration(ADD_ANIM_DURATION);
-            mSimpleItemAnimator.setChangeDuration(CHANGE_ANIM_DURATION);
-            mSimpleItemAnimator.setMoveDuration(MOVE_ANIM_DURATION);
-            mSimpleItemAnimator.setRemoveDuration(REMOVE_ANIM_DURATION);
-            mSimpleItemAnimator.setSupportsChangeAnimations(true);
-            setItemAnimator(mSimpleItemAnimator);
+        if (mAdapter != null && BizBaseAdapter.class.isAssignableFrom(mAdapter.getClass())) {
+            ((BizBaseAdapter) mAdapter).initItemAnimator(hasAnimate);
         }
     }
 

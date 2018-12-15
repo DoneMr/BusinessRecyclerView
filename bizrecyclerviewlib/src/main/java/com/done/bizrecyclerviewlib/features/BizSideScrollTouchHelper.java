@@ -2,6 +2,7 @@ package com.done.bizrecyclerviewlib.features;
 
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -27,8 +28,10 @@ public class BizSideScrollTouchHelper extends BaseBizTouchHelper {
         int dragFlag = 0;
         int swipeFlag = 0;
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-        if (layoutManager instanceof LinearLayoutManager) {
-            if (BizBaseAdapter.class.isAssignableFrom(mAdapter.getClass())) {
+        //GridLayoutManage继承LinearLayoutManager，小坑趟过
+        if (layoutManager instanceof LinearLayoutManager && !(layoutManager instanceof GridLayoutManager)) {
+            boolean isVertical = (((LinearLayoutManager) layoutManager).getOrientation() == LinearLayoutManager.VERTICAL);
+            if (BizBaseAdapter.class.isAssignableFrom(mAdapter.getClass()) && isVertical) {
                 boolean isSupportDelete = ((BizBaseAdapter) mAdapter).isSupportDelete(viewHolder.getItemViewType());
                 if (isSupportDelete) {
                     swipeFlag = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;

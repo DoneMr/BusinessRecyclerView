@@ -3,6 +3,8 @@ package com.done.bizrecyclerviewlib.adpater;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.ViewGroup;
 
 import com.done.bizrecyclerviewlib.BizRecyclerView;
@@ -10,6 +12,8 @@ import com.done.bizrecyclerviewlib.Preconditions;
 import com.done.bizrecyclerviewlib.cell.IBizCell;
 import com.done.bizrecyclerviewlib.eventbus.BaseEventHandler;
 import com.done.bizrecyclerviewlib.eventbus.DefaultBaseEventHandler;
+import com.done.bizrecyclerviewlib.features.BizDefaultAnimator;
+import com.done.bizrecyclerviewlib.features.BizSideScrollTouchHelper;
 import com.done.bizrecyclerviewlib.holder.BizViewHolder;
 
 import java.util.List;
@@ -22,7 +26,7 @@ import java.util.List;
  * @date 2018/12/13
  */
 
-public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView.Adapter<BizViewHolder> implements DefaultBaseEventHandler.OnMessageListener {
+public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView.Adapter<BizViewHolder> implements DefaultBaseEventHandler.OnMessageListener, BizDefaultAnimator.AnimationListener {
 
     private TypePool mTypePool;
 
@@ -30,9 +34,26 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
 
     private boolean isAnimate = false;
 
+    private ItemTouchHelper mItemTouchHelper;
+
+    private BizDefaultAnimator mItemAnimator;
+
+    private NOTIFY_STATUS mCurStatus = NOTIFY_STATUS.DEFAULT;
+
+    public enum NOTIFY_STATUS {
+        DEFAULT,
+        ADD,
+        MOVE,
+        REMOVE,
+        CHANGE
+    }
+
     public BizBaseAdapter() {
         this.mTypePool = new BizTypePool();
         mEventHandler = new DefaultBaseEventHandler(this);
+        mItemTouchHelper = new ItemTouchHelper(new BizSideScrollTouchHelper(this));
+        mItemAnimator = new BizDefaultAnimator();
+        mItemAnimator.setAnimationListener(this);
     }
 
     @Override
@@ -95,8 +116,10 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
         if (recyclerView instanceof BizRecyclerView) {
             isAnimate = ((BizRecyclerView) recyclerView).hasAnimate();
+            recyclerView.setItemAnimator(mItemAnimator);
         }
     }
 
@@ -145,6 +168,39 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
         notifyDataChange(pos);
     }
 
+    /**
+     * 外部无需调用此方法，此方法仅供{@link BizRecyclerView}调用
+     *
+     * @param isAnimate
+     */
+    public void initItemAnimator(boolean isAnimate) {
+        this.isAnimate = isAnimate;
+    }
+
+    @Override
+    public void onAddFinished(RecyclerView.ViewHolder item) {
+        if (mCurStatus == NOTIFY_STATUS.ADD) {
+            notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onMoveFinished(RecyclerView.ViewHolder item) {
+
+    }
+
+    @Override
+    public void onRemoveFinished(RecyclerView.ViewHolder item) {
+        if (mCurStatus == NOTIFY_STATUS.REMOVE) {
+            notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onChangeFinished(RecyclerView.ViewHolder item, boolean oldItem) {
+
+    }
+
     //-------------------------对外提供的可操作的方法-----------------------//
 
     public int getCellViewType(Cell cell) {
@@ -152,27 +208,44 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
     }
 
     public void add(Cell cell) {
-        Preconditions.checkNotNull(cell);
-        cell.setEventHandler(mEventHandler);
+        setCellHandler(cell);
         int pos = mTypePool.addCell(cell);
+        setAnimStatus(NOTIFY_STATUS.ADD);
         notifyItemRangeChanged(pos, 1);
     }
 
+    private void setAnimStatus(NOTIFY_STATUS status) {
+        mCurStatus = status;
+    }
+
     public void add(int pos, Cell cell) {
-        Preconditions.checkNotNull(cell);
-        cell.setEventHandler(mEventHandler);
+        setCellHandler(cell);
         mTypePool.addCell(pos, cell);
+        setAnimStatus(NOTIFY_STATUS.ADD);
         int itemCount = getItemCount() - pos < 1 ? 1 : getItemCount() - pos;
-        notifyItemRangeChanged(pos, itemCount);
+        if (isAnimate) {
+            notifyItemRangeChanged(pos, 1);
+        } else {
+            notifyDataSetChanged();
+        }
     }
 
     public void addCells(List<Cell> cells) {
         for (Cell cell : cells) {
-            Preconditions.checkNotNull(cell);
-            cell.setEventHandler(mEventHandler);
+            setCellHandler(cell);
         }
         int startPos = mTypePool.addCells((List<IBizCell>) cells);
-        notifyItemRangeChanged(startPos, cells.size());
+        setAnimStatus(NOTIFY_STATUS.ADD);
+        if (isAnimate) {
+            notifyItemRangeChanged(startPos, cells.size());
+        } else {
+            notifyDataSetChanged();
+        }
+    }
+
+    private void setCellHandler(Cell cell) {
+        Preconditions.checkNotNull(cell);
+        cell.setEventHandler(mEventHandler);
     }
 
 
@@ -187,25 +260,27 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
     }
 
     public void remove(int start, int end) {
+        setAnimStatus(NOTIFY_STATUS.REMOVE);
         for (int i = start; i < end + 1; i++) {
-            remove(i);
+            mEventHandler.removeMessage(i);
+            mTypePool.removeCell(i);
         }
+        notifyDataSetChanged();
     }
 
     public void remove(int index) {
         mEventHandler.removeMessage(index);
         mTypePool.removeCell(index);
         if (isAnimate) {
-            //TODO 自定义一下动画实现对增删改动画的结束的监听
-//            notifyItemRangeRemoved(index, 1);
-            int itemCount = getItemCount() - index < 1 ? 1 : getItemCount() - index + 1;
-            notifyItemRangeRemoved(index, itemCount);
+            setAnimStatus(NOTIFY_STATUS.REMOVE);
+            notifyItemRangeRemoved(index, 1);
         } else {
             notifyDataSetChanged();
         }
     }
 
     public void clear() {
+        setAnimStatus(NOTIFY_STATUS.REMOVE);
         mTypePool.clear();
         notifyDataSetChanged();
     }
