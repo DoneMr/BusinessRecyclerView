@@ -19,7 +19,7 @@ import java.util.List;
  * @date 2018/12/13
  */
 
-public abstract class BaseBizCell<T> implements IBizCell {
+public abstract class BaseBizCell<T> implements IBizCell<T> {
 
     private static final String TAG = "BaseBizCell";
 
@@ -107,15 +107,13 @@ public abstract class BaseBizCell<T> implements IBizCell {
         return false;
     }
 
+    @Override
+    public T getModel() {
+        return mData;
+    }
+
     protected abstract void binViewHolder(@NonNull BizViewHolder viewHolder, int position);
 
     protected abstract void onRelease(@NonNull RecyclerView.ViewHolder holder);
 
-    public T getmData() {
-        return mData;
-    }
-
-    public void setmData(T mData) {
-        this.mData = mData;
-    }
 }

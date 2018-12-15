@@ -180,7 +180,7 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
     @Override
     public void onAddFinished(RecyclerView.ViewHolder item) {
         if (mCurStatus == NOTIFY_STATUS.ADD) {
-            notifyDataSetChanged();
+            postNotify();
         }
     }
 
@@ -192,13 +192,24 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
     @Override
     public void onRemoveFinished(RecyclerView.ViewHolder item) {
         if (mCurStatus == NOTIFY_STATUS.REMOVE) {
-            notifyDataSetChanged();
+            postNotify();
         }
     }
 
     @Override
     public void onChangeFinished(RecyclerView.ViewHolder item, boolean oldItem) {
 
+    }
+
+    private void postNotify() {
+        if (mEventHandler != null) {
+            mEventHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            });
+        }
     }
 
     //-------------------------对外提供的可操作的方法-----------------------//
@@ -226,7 +237,7 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
         if (isAnimate) {
             notifyItemRangeChanged(pos, 1);
         } else {
-            notifyDataSetChanged();
+            postNotify();
         }
     }
 
@@ -239,7 +250,7 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
         if (isAnimate) {
             notifyItemRangeChanged(startPos, cells.size());
         } else {
-            notifyDataSetChanged();
+            postNotify();
         }
     }
 
@@ -265,7 +276,7 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
             mEventHandler.removeMessage(i);
             mTypePool.removeCell(i);
         }
-        notifyDataSetChanged();
+        postNotify();
     }
 
     public void remove(int index) {
@@ -275,14 +286,14 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
             setAnimStatus(NOTIFY_STATUS.REMOVE);
             notifyItemRangeRemoved(index, 1);
         } else {
-            notifyDataSetChanged();
+            postNotify();
         }
     }
 
     public void clear() {
         setAnimStatus(NOTIFY_STATUS.REMOVE);
         mTypePool.clear();
-        notifyDataSetChanged();
+        postNotify();
     }
 
     public final boolean isSupportDelete(int viewType) {

@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2018/12/13
  */
 
-public interface IBizCell {
+public interface IBizCell<T> {
 
     void onBindViewHolder(@NonNull BizViewHolder holder, int position, @NonNull List<Object> payloads);
 
@@ -70,4 +70,12 @@ public interface IBizCell {
      * @param pos 位置
      */
     void notifySelf(int pos);
+
+    /**
+     * 获取cell中的数据源
+     *
+     * @return
+     */
+    T getModel();
+
 }

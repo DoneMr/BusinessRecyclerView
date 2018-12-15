@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Button;
 
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRemove.setOnClickListener(this);
         mAdapter = new BizDefaultAdapter();
         mRvTest.setAdapter(mAdapter);
-        mRvTest.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
+        mRvTest.setLayoutManager(new LinearLayoutManager(this, GridLayoutManager.VERTICAL, false));
     }
 
     private int addStyle = 0;
