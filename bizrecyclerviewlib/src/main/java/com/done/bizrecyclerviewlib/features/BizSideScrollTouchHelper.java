@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.done.bizrecyclerviewlib.adpater.BizBaseAdapter;
-import com.done.bizrecyclerviewlib.adpater.BizDefaultAdapter;
 
 /**
  * File:BusinessRecyclerView.com.done.bizrecyclerviewlib.features.BizSideScrollTouchHelper
