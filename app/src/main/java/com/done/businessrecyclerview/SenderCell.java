@@ -56,7 +56,7 @@ public class SenderCell extends BaseBizCell<ComnuicationViewModel> implements Vi
         String message = "\nreceiveMessage(" + sourcePos + "):" + (data == null ? "null" : data.toString());
         stringBuilder.append(message);
         mData.setContent(stringBuilder.toString());
-        notifySelf(mPos);
+        refreshSelf();
     }
 
     @Override

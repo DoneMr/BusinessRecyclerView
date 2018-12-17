@@ -50,7 +50,7 @@ public class DeleteCell extends BaseBizCell<ComnuicationViewModel> {
         String message = "\nreceiveMessage(" + sourcePos + "):" + (data == null ? "null" : data.toString());
         stringBuilder.append(message);
         mData.setContent(stringBuilder.toString());
-        notifySelf(mPos);
+        refreshSelf();
     }
 
     @Override
