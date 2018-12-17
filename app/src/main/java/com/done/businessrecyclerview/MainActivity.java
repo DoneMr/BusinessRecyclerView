@@ -1,5 +1,6 @@
 package com.done.businessrecyclerview;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         final int viewId = v.getId();
         if (viewId == R.id.btn_test1) {
-            if (addStyle > 2) {
+            if (addStyle > 3) {
                 addStyle = 0;
             }
             if (addStyle == 0) {
@@ -62,6 +63,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mAdapter.addCells(cell3s);
             } else if (addStyle == 2) {
                 mAdapter.add(1, new DeleteCell(new ComnuicationViewModel()));
+            } else if (addStyle == 3) {
+                BannerCell.ViewModel viewModel = new BannerCell.ViewModel();
+                viewModel.setBgColor(new int[]{Color.parseColor("#FF0000"),
+                        Color.parseColor("#00FF00"),
+                        Color.parseColor("#0000FF")});
+                mAdapter.add(new BannerCell(viewModel));
             }
             addStyle++;
         } else if (viewId == R.id.btn_test2) {

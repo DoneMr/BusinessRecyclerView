@@ -12,7 +12,9 @@ import com.done.bizrecyclerviewlib.Preconditions;
 import com.done.bizrecyclerviewlib.cell.IBizCell;
 import com.done.bizrecyclerviewlib.eventbus.BaseEventHandler;
 import com.done.bizrecyclerviewlib.eventbus.DefaultBaseEventHandler;
+import com.done.bizrecyclerviewlib.features.BaseBizSnapHelper;
 import com.done.bizrecyclerviewlib.features.BizDefaultAnimator;
+import com.done.bizrecyclerviewlib.features.BizPagerSnapHelper;
 import com.done.bizrecyclerviewlib.features.BizSideScrollTouchHelper;
 import com.done.bizrecyclerviewlib.holder.BizViewHolder;
 
@@ -34,11 +36,17 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
 
     private boolean isAnimate = false;
 
+    private boolean pageScorll = false;
+
     private ItemTouchHelper mItemTouchHelper;
 
     private BizDefaultAnimator mItemAnimator;
 
+    private BaseBizSnapHelper mSnapHelper;
+
     private NOTIFY_STATUS mCurStatus = NOTIFY_STATUS.DEFAULT;
+
+    private RecyclerView mRecyclerView;
 
     public enum NOTIFY_STATUS {
         DEFAULT,
@@ -54,6 +62,7 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
         mItemTouchHelper = new ItemTouchHelper(new BizSideScrollTouchHelper(this));
         mItemAnimator = new BizDefaultAnimator();
         mItemAnimator.setAnimationListener(this);
+        mSnapHelper = new BizPagerSnapHelper();
     }
 
     @Override
@@ -116,10 +125,15 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        mRecyclerView = recyclerView;
         mItemTouchHelper.attachToRecyclerView(recyclerView);
         if (recyclerView instanceof BizRecyclerView) {
             isAnimate = ((BizRecyclerView) recyclerView).hasAnimate();
             recyclerView.setItemAnimator(mItemAnimator);
+            pageScorll = ((BizRecyclerView) recyclerView).isPageScroll();
+            if (pageScorll) {
+                mSnapHelper.attachToRecyclerView(recyclerView);
+            }
         }
     }
 
@@ -175,6 +189,21 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
      */
     public void initItemAnimator(boolean isAnimate) {
         this.isAnimate = isAnimate;
+    }
+
+    /**
+     * 外部无需调用此方法，此方法仅供{@link BizRecyclerView}调用
+     *
+     * @param isPageScroll
+     */
+    public void initPageScroll(boolean isPageScroll) {
+        this.pageScorll = isPageScroll;
+        //这里无需关注RV本身是否是BizRv，RV本身支持
+        if (isPageScroll) {
+            mSnapHelper.attachToRecyclerView(mRecyclerView);
+        } else {
+            mSnapHelper.attachToRecyclerView(null);
+        }
     }
 
     @Override

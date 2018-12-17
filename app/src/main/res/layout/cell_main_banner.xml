@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_banner_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.done.bizrecyclerviewlib.BizRecyclerView
+        android:id="@+id/rv_banner"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:biz_has_animate="true"
+        app:biz_page_scroll="true" />
+</RelativeLayout>
