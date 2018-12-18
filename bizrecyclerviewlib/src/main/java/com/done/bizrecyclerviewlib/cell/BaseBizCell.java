@@ -108,6 +108,41 @@ public abstract class BaseBizCell<T> implements IBizCell<T> {
     }
 
     @Override
+    public void onCreate() {
+
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+
+    }
+
+    @Override
+    public void onAny() {
+
+    }
+
+    @Override
     public T getModel() {
         return mData;
     }
