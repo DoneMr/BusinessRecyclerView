@@ -402,6 +402,14 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
         return cellForType != null && cellForType.isSupportDelete();
     }
 
+    public final void broadcastAllCell(@Nullable Object data) {
+        List<IBizCell> allCells = mTypePool.getAllCells();
+        for (int i = 0; i < allCells.size(); i++) {
+            IBizCell cell = allCells.get(i);
+            cell.handleMessage(BaseEventHandler.BROADCAST_DATA, data);
+        }
+    }
+
     public IBizCell getCell(int pos) {
         return mTypePool.getCell(pos);
     }

@@ -59,7 +59,7 @@ public interface IBizCell<T> {
     /**
      * 处理来自其他cell的消息
      *
-     * @param sourcePos 来源cell的pos
+     * @param sourcePos 来源cell的pos 当pos=-100时，消息来自外部，所有cell都会受到此消息{@link BaseEventHandler#BROADCAST_DATA}
      * @param data
      */
     void handleMessage(int sourcePos, @Nullable Object data);
@@ -80,6 +80,7 @@ public interface IBizCell<T> {
 
     /**
      * 此类接口的回调需要在对应的Activity或者Fragment对adapter进行注册
+     *
      * @see com.done.bizrecyclerviewlib.adpater.BizBaseAdapter
      * 以下
      * 同步activity或者Fragment的生命周期

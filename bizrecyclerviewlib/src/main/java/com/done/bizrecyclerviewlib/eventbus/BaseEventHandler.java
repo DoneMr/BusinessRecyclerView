@@ -21,6 +21,8 @@ public abstract class BaseEventHandler extends Handler {
 
     public static final int NOTIFY_ITEM = -1;
 
+    public static final int BROADCAST_DATA = -100;
+
     public BaseEventHandler() {
         super(Looper.getMainLooper());
     }
