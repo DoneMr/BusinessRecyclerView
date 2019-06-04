@@ -9,6 +9,6 @@
         android:id="@+id/rv_banner"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        app:biz_has_animate="true"
+        app:biz_has_animate="false"
         app:biz_page_scroll="true" />
 </RelativeLayout>

@@ -1,9 +1,9 @@
 package com.done.bizrecyclerviewlib.adpater;
 
+import android.arch.lifecycle.LifecycleObserver;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.ViewGroup;
 
@@ -28,7 +28,9 @@ import java.util.List;
  * @date 2018/12/13
  */
 
-public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView.Adapter<BizViewHolder> implements DefaultBaseEventHandler.OnMessageListener, BizDefaultAnimator.AnimationListener {
+public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView.Adapter<BizViewHolder>
+        implements DefaultBaseEventHandler.OnMessageListener,
+        BizDefaultAnimator.AnimationListener, ILifecycleProxy {
 
     private TypePool mTypePool;
 
@@ -36,7 +38,7 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
 
     private boolean isAnimate = false;
 
-    private boolean pageScorll = false;
+    private boolean pageScroll = false;
 
     private ItemTouchHelper mItemTouchHelper;
 
@@ -130,8 +132,8 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
         if (recyclerView instanceof BizRecyclerView) {
             isAnimate = ((BizRecyclerView) recyclerView).hasAnimate();
             recyclerView.setItemAnimator(mItemAnimator);
-            pageScorll = ((BizRecyclerView) recyclerView).isPageScroll();
-            if (pageScorll) {
+            pageScroll = ((BizRecyclerView) recyclerView).isPageScroll();
+            if (pageScroll) {
                 mSnapHelper.attachToRecyclerView(recyclerView);
             }
         }
@@ -197,7 +199,7 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
      * @param isPageScroll
      */
     public void initPageScroll(boolean isPageScroll) {
-        this.pageScorll = isPageScroll;
+        this.pageScroll = isPageScroll;
         //这里无需关注RV本身是否是BizRv，RV本身支持
         if (isPageScroll) {
             mSnapHelper.attachToRecyclerView(mRecyclerView);
@@ -238,6 +240,76 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
                     notifyDataSetChanged();
                 }
             });
+        }
+    }
+
+    @Override
+    public void onCreate() {
+        synchronized (BizBaseAdapter.class) {
+            List<IBizCell> allCells = mTypePool.getAllCells();
+            for (IBizCell allCell : allCells) {
+                allCell.onCreate();
+            }
+        }
+    }
+
+    @Override
+    public void onStart() {
+        synchronized (BizBaseAdapter.class) {
+            List<IBizCell> allCells = mTypePool.getAllCells();
+            for (IBizCell allCell : allCells) {
+                allCell.onCreate();
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        synchronized (BizBaseAdapter.class) {
+            List<IBizCell> allCells = mTypePool.getAllCells();
+            for (IBizCell allCell : allCells) {
+                allCell.onResume();
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        synchronized (BizBaseAdapter.class) {
+            List<IBizCell> allCells = mTypePool.getAllCells();
+            for (IBizCell allCell : allCells) {
+                allCell.onPause();
+            }
+        }
+    }
+
+    @Override
+    public void onStop() {
+        synchronized (BizBaseAdapter.class) {
+            List<IBizCell> allCells = mTypePool.getAllCells();
+            for (IBizCell allCell : allCells) {
+                allCell.onStop();
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        synchronized (BizBaseAdapter.class) {
+            List<IBizCell> allCells = mTypePool.getAllCells();
+            for (IBizCell allCell : allCells) {
+                allCell.onDestroy();
+            }
+        }
+    }
+
+    @Override
+    public void onAny() {
+        synchronized (BizBaseAdapter.class) {
+            List<IBizCell> allCells = mTypePool.getAllCells();
+            for (IBizCell allCell : allCells) {
+                allCell.onAny();
+            }
         }
     }
 
@@ -328,6 +400,14 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
     public final boolean isSupportDelete(int viewType) {
         IBizCell cellForType = mTypePool.getCellForType(viewType);
         return cellForType != null && cellForType.isSupportDelete();
+    }
+
+    public final void broadcastAllCell(@Nullable Object data) {
+        List<IBizCell> allCells = mTypePool.getAllCells();
+        for (int i = 0; i < allCells.size(); i++) {
+            IBizCell cell = allCells.get(i);
+            cell.handleMessage(BaseEventHandler.BROADCAST_DATA, data);
+        }
     }
 
     public IBizCell getCell(int pos) {

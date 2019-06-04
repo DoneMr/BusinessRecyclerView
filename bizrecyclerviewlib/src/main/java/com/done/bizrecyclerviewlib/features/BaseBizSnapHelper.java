@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.view.View;
 
+import com.done.bizrecyclerviewlib.Preconditions;
+
 /**
  * File: com.done.bizrecyclerviewlib.features.BaseBizSnapHelper.java
  * Description: xxx
@@ -17,6 +19,12 @@ import android.view.View;
 public abstract class BaseBizSnapHelper extends SnapHelper {
 
     protected RecyclerView mRecyclerView;
+
+    private RecyclerView.OnScrollListener mScrollListener;
+
+    public BaseBizSnapHelper() {
+        this.mScrollListener = new BizScrollListener();
+    }
 
     @Nullable
     @Override
@@ -38,6 +46,30 @@ public abstract class BaseBizSnapHelper extends SnapHelper {
     @Override
     public void attachToRecyclerView(@Nullable RecyclerView recyclerView) throws IllegalStateException {
         super.attachToRecyclerView(recyclerView);
-        mRecyclerView = recyclerView;
+        if (recyclerView != null) {
+            mRecyclerView = recyclerView;
+            mRecyclerView.addOnScrollListener(mScrollListener);
+        }
+    }
+
+    private class BizScrollListener extends RecyclerView.OnScrollListener {
+
+        @Override
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            BaseBizSnapHelper.this.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+            BaseBizSnapHelper.this.onScrolled(recyclerView, dx, dy);
+        }
+    }
+
+    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+
+    }
+
+    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+
     }
 }

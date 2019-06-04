@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRemove.setOnClickListener(this);
         mAdapter = new BizDefaultAdapter();
         mRvTest.setAdapter(mAdapter);
+        getLifecycle().addObserver(mAdapter);
         mRvTest.setLayoutManager(new LinearLayoutManager(this, GridLayoutManager.VERTICAL, false));
     }
 
