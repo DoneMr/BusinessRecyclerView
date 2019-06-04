@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mAdapter.add(new SenderCell(new ComnuicationViewModel()));
             } else if (addStyle == 1) {
                 List<NormalCell3> cell3s = new ArrayList<>();
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 1; i++) {
                     NormalCell3 cell3 = new NormalCell3(null);
                     cell3s.add(cell3);
                     mAdapter.add(new NormalCell4(null));
