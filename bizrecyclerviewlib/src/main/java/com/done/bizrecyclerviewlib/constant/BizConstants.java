@@ -5,7 +5,7 @@ package com.done.bizrecyclerviewlib.constant;
  * Description: 常量类，当开关用
  *
  * @author Done
- * @date 2018/12/13
+ * date 2018/12/13
  */
 
 public class BizConstants {

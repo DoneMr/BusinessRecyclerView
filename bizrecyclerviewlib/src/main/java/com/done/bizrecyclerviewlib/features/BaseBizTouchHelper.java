@@ -8,7 +8,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
  * Description:xxx
  *
  * @author maruilong
- * @date 2018/12/15 星期六
+ * date 2018/12/15 星期六
  */
 public abstract class BaseBizTouchHelper extends ItemTouchHelper.Callback{
 

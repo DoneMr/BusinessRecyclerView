@@ -14,7 +14,7 @@ import com.done.bizrecyclerviewlib.adpater.BizBaseAdapter;
  * Description: 便于修改，抽出来
  *
  * @author Done
- * @date 2018/12/12
+ * date 2018/12/12
  */
 
 public class BizRecyclerView extends RecyclerView {

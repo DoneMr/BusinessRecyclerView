@@ -5,7 +5,7 @@ package com.done.bizrecyclerviewlib.exception;
  * Description: bug自检异常
  *
  * @author Done
- * @date 2018/12/13
+ * date 2018/12/13
  */
 
 public class BizBugException extends RuntimeException {

@@ -10,7 +10,7 @@ import com.done.bizrecyclerviewlib.constant.BizConstants;
  * Description: xxx
  *
  * @author Done
- * @date 2018/12/13
+ * date 2018/12/13
  */
 
 public class BizLogger {

@@ -16,7 +16,7 @@ import java.util.List;
  * Description: cell基类，调用者需要实现自己的实例cell并继承改类
  *
  * @author Done
- * @date 2018/12/13
+ * date 2018/12/13
  */
 
 public abstract class BaseBizCell<T> implements IBizCell<T> {

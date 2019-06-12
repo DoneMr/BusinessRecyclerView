@@ -16,7 +16,7 @@ import com.done.bizrecyclerviewlib.holder.BizViewHolder;
  * Description: xxx
  *
  * @author Done
- * @date 2018/12/17
+ * date 2018/12/17
  */
 
 public class BannerCell extends BaseBizCell<BannerCell.ViewModel> {

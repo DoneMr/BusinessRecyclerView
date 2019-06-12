@@ -13,7 +13,7 @@ import com.done.bizrecyclerviewlib.Preconditions;
  * Description: xxx
  *
  * @author Done
- * @date 2018/12/17
+ * date 2018/12/17
  */
 
 public abstract class BaseBizSnapHelper extends SnapHelper {

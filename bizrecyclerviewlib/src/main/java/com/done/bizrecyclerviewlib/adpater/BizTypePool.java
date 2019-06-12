@@ -16,7 +16,7 @@ import java.util.List;
  * Description: 维护Cell和其对应的Type
  *
  * @author Done
- * @date 2018/12/13
+ * date 2018/12/13
  */
 
 public final class BizTypePool implements TypePool {

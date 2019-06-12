@@ -14,7 +14,7 @@ import com.done.bizrecyclerviewlib.adpater.BizBaseAdapter;
  * Description:侧滑辅助滑动对象，只兼顾LinearLayoutManager{@link RecyclerView.LayoutManager}
  *
  * @author maruilong
- * @date 2018/12/14 星期五
+ * date 2018/12/14 星期五
  */
 public class BizSideScrollTouchHelper extends BaseBizTouchHelper {
 

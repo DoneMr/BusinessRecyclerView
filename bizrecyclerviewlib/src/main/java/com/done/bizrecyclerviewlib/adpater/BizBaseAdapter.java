@@ -25,7 +25,7 @@ import java.util.List;
  * Description: adapter基类
  *
  * @author Done
- * @date 2018/12/13
+ * date 2018/12/13
  */
 
 public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView.Adapter<BizViewHolder>

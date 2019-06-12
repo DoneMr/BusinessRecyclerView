@@ -11,7 +11,7 @@ import com.done.bizrecyclerviewlib.util.BizLogger;
  * Description: xxx
  *
  * @author Done
- * @date 2018/12/15
+ * date 2018/12/15
  */
 
 public class BizDefaultAnimator extends DefaultItemAnimator {

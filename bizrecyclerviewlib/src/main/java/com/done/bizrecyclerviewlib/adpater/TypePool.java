@@ -12,7 +12,7 @@ import java.util.List;
  * Description: xxx
  *
  * @author Done
- * @date 2018/12/13
+ * date 2018/12/13
  */
 
 public interface TypePool {

@@ -9,7 +9,7 @@ import android.arch.lifecycle.OnLifecycleEvent;
  * Description: xxx
  *
  * @author Done
- * @date 2018/12/18
+ * date 2018/12/18
  */
 
 public interface ILifecycleProxy extends LifecycleObserver {

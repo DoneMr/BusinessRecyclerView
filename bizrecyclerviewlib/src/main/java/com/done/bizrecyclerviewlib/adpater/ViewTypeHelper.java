@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Description: 用于维护RV的ViewType，永不销毁已经存在的Class对应的ViewType
  *
  * @author Done
- * @date 2018/12/13
+ * date 2018/12/13
  */
 
 public class ViewTypeHelper {

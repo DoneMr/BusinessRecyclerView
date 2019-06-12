@@ -9,7 +9,7 @@ import com.done.bizrecyclerviewlib.Preconditions;
  * Description: 消息中心
  *
  * @author Done
- * @date 2018/12/14
+ * date 2018/12/14
  */
 
 public class DefaultBaseEventHandler extends BaseEventHandler {

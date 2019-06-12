@@ -12,7 +12,7 @@ import com.done.bizrecyclerviewlib.util.BizLogger;
  * Description: cell通信 工作在主线程，
  *
  * @author Done
- * @date 2018/12/14
+ * date 2018/12/14
  */
 
 public abstract class BaseEventHandler extends Handler {

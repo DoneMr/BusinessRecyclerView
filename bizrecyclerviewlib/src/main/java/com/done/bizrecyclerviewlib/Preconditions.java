@@ -9,7 +9,7 @@ import com.done.bizrecyclerviewlib.exception.BizBugException;
  * Description: 异常专业户
  *
  * @author Done
- * @date 2018/12/12
+ * date 2018/12/12
  */
 @SuppressWarnings("WeakerAccess")
 public final class Preconditions {

@@ -11,7 +11,7 @@ import com.done.bizrecyclerviewlib.holder.BizViewHolder;
  * Description: xxx
  *
  * @author Done
- * @date 2018/12/13
+ * date 2018/12/13
  */
 
 public class NormalCell5 extends BaseBizCell<NormalCellViewType> {

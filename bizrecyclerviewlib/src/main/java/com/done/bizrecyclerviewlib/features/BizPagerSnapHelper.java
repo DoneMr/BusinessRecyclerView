@@ -19,7 +19,7 @@ import com.done.bizrecyclerviewlib.cell.IBizCell;
  * Description: xxx
  *
  * @author Done
- * @date 2018/12/17
+ * date 2018/12/17
  */
 
 public class BizPagerSnapHelper extends BaseBizSnapHelper {

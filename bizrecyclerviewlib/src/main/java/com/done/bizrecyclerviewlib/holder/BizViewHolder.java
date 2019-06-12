@@ -27,7 +27,7 @@ import java.lang.ref.WeakReference;
  * 可直接用于ListView，ViewPager，GridView的holder使用
  *
  * @author Done
- * @date 2018/12/12
+ * date 2018/12/12
  */
 
 public class BizViewHolder extends RecyclerView.ViewHolder {

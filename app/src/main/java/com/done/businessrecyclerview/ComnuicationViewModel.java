@@ -5,7 +5,7 @@ package com.done.businessrecyclerview;
  * Description: xxx
  *
  * @author Done
- * @date 2018/12/14
+ * date 2018/12/14
  */
 
 public class ComnuicationViewModel {
