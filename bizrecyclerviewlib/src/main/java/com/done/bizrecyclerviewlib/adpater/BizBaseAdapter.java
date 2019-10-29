@@ -1,11 +1,11 @@
 package com.done.bizrecyclerviewlib.adpater;
 
-import android.arch.lifecycle.LifecycleObserver;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.done.bizrecyclerviewlib.BizRecyclerView;
 import com.done.bizrecyclerviewlib.Preconditions;

@@ -1,7 +1,8 @@
 package com.done.bizrecyclerviewlib.adpater;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.done.bizrecyclerviewlib.cell.IBizCell;
 

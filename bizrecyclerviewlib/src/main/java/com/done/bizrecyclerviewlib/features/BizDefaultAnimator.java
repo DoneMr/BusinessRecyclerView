@@ -1,10 +1,8 @@
 package com.done.bizrecyclerviewlib.features;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.RecyclerView;
 
-import com.done.bizrecyclerviewlib.util.BizLogger;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * File: com.done.bizrecyclerviewlib.features.BizDefaultAnimator.java

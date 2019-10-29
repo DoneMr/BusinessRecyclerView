@@ -1,6 +1,7 @@
 package com.done.bizrecyclerviewlib;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.done.bizrecyclerviewlib.exception.BizBugException;
 

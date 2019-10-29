@@ -1,6 +1,7 @@
 package com.done.bizrecyclerviewlib.adpater;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.done.bizrecyclerviewlib.Preconditions;
 import com.done.bizrecyclerviewlib.util.BizLogger;

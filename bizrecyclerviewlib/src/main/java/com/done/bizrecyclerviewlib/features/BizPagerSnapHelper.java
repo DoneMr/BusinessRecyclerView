@@ -1,18 +1,14 @@
 package com.done.bizrecyclerviewlib.features;
 
 import android.graphics.PointF;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearSmoothScroller;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.LayoutManager;
-import android.support.v7.widget.RecyclerView.SmoothScroller.ScrollVectorProvider;
 import android.util.DisplayMetrics;
 import android.view.View;
 
-import com.done.bizrecyclerviewlib.adpater.BizBaseAdapter;
-import com.done.bizrecyclerviewlib.cell.IBizCell;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearSmoothScroller;
+import androidx.recyclerview.widget.OrientationHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * File: com.done.bizrecyclerviewlib.features.BizPagerSnapHelper.java
@@ -45,7 +41,7 @@ public class BizPagerSnapHelper extends BaseBizSnapHelper {
 
     @Override
     @Nullable
-    public int[] calculateDistanceToFinalSnap(@NonNull LayoutManager layoutManager, @NonNull View targetView) {
+    public int[] calculateDistanceToFinalSnap(@NonNull RecyclerView.LayoutManager layoutManager, @NonNull View targetView) {
         int[] out = new int[2];
         if (layoutManager.canScrollHorizontally()) {
             out[0] = this.distanceToCenter(layoutManager, targetView, this.getHorizontalHelper(layoutManager));
@@ -65,7 +61,7 @@ public class BizPagerSnapHelper extends BaseBizSnapHelper {
 
     @Override
     @Nullable
-    public View findSnapView(LayoutManager layoutManager) {
+    public View findSnapView(RecyclerView.LayoutManager layoutManager) {
         if (layoutManager.canScrollVertically()) {
             return this.findCenterView(layoutManager, this.getVerticalHelper(layoutManager));
         } else {
@@ -74,7 +70,7 @@ public class BizPagerSnapHelper extends BaseBizSnapHelper {
     }
 
     @Override
-    public int findTargetSnapPosition(LayoutManager layoutManager, int velocityX, int velocityY) {
+    public int findTargetSnapPosition(RecyclerView.LayoutManager layoutManager, int velocityX, int velocityY) {
         int itemCount = layoutManager.getItemCount();
         if (itemCount == 0) {
             return RecyclerView.NO_POSITION;
@@ -101,8 +97,8 @@ public class BizPagerSnapHelper extends BaseBizSnapHelper {
                     }
 
                     boolean reverseLayout = false;
-                    if (layoutManager instanceof ScrollVectorProvider) {
-                        ScrollVectorProvider vectorProvider = (ScrollVectorProvider) layoutManager;
+                    if (layoutManager instanceof RecyclerView.SmoothScroller.ScrollVectorProvider) {
+                        RecyclerView.SmoothScroller.ScrollVectorProvider vectorProvider = (RecyclerView.SmoothScroller.ScrollVectorProvider) layoutManager;
                         PointF vectorForEnd = vectorProvider.computeScrollVectorForPosition(itemCount - 1);
                         if (vectorForEnd != null) {
                             reverseLayout = vectorForEnd.x < 0.0F || vectorForEnd.y < 0.0F;
@@ -116,8 +112,8 @@ public class BizPagerSnapHelper extends BaseBizSnapHelper {
     }
 
     @Override
-    protected LinearSmoothScroller createSnapScroller(LayoutManager layoutManager) {
-        return !(layoutManager instanceof ScrollVectorProvider) ? null : new LinearSmoothScroller(this.mRecyclerView.getContext()) {
+    protected LinearSmoothScroller createSnapScroller(RecyclerView.LayoutManager layoutManager) {
+        return !(layoutManager instanceof RecyclerView.SmoothScroller.ScrollVectorProvider) ? null : new LinearSmoothScroller(this.mRecyclerView.getContext()) {
             @Override
             protected void onTargetFound(View targetView, RecyclerView.State state, RecyclerView.SmoothScroller.Action action) {
                 int[] snapDistances = calculateDistanceToFinalSnap(mRecyclerView.getLayoutManager(), targetView);
@@ -144,7 +140,7 @@ public class BizPagerSnapHelper extends BaseBizSnapHelper {
         };
     }
 
-    private int distanceToCenter(@NonNull LayoutManager layoutManager, @NonNull View targetView, OrientationHelper helper) {
+    private int distanceToCenter(@NonNull RecyclerView.LayoutManager layoutManager, @NonNull View targetView, OrientationHelper helper) {
         int childCenter = helper.getDecoratedStart(targetView) + helper.getDecoratedMeasurement(targetView) / 2;
         int containerCenter;
         if (layoutManager.getClipToPadding()) {
@@ -157,7 +153,7 @@ public class BizPagerSnapHelper extends BaseBizSnapHelper {
     }
 
     @Nullable
-    private View findCenterView(LayoutManager layoutManager, OrientationHelper helper) {
+    private View findCenterView(RecyclerView.LayoutManager layoutManager, OrientationHelper helper) {
         int childCount = layoutManager.getChildCount();
         if (childCount == 0) {
             return null;
@@ -187,7 +183,7 @@ public class BizPagerSnapHelper extends BaseBizSnapHelper {
     }
 
     @Nullable
-    private View findStartView(LayoutManager layoutManager, OrientationHelper helper) {
+    private View findStartView(RecyclerView.LayoutManager layoutManager, OrientationHelper helper) {
         int childCount = layoutManager.getChildCount();
         if (childCount == 0) {
             return null;
@@ -209,7 +205,7 @@ public class BizPagerSnapHelper extends BaseBizSnapHelper {
     }
 
     @NonNull
-    private OrientationHelper getVerticalHelper(@NonNull LayoutManager layoutManager) {
+    private OrientationHelper getVerticalHelper(@NonNull RecyclerView.LayoutManager layoutManager) {
         if (this.mVerticalHelper == null || mVerticalHelper.getLayoutManager() != layoutManager) {
             this.mVerticalHelper = OrientationHelper.createVerticalHelper(layoutManager);
         }
@@ -218,7 +214,7 @@ public class BizPagerSnapHelper extends BaseBizSnapHelper {
     }
 
     @NonNull
-    private OrientationHelper getHorizontalHelper(@NonNull LayoutManager layoutManager) {
+    private OrientationHelper getHorizontalHelper(@NonNull RecyclerView.LayoutManager layoutManager) {
         if (this.mHorizontalHelper == null || mHorizontalHelper.getLayoutManager() != layoutManager) {
             this.mHorizontalHelper = OrientationHelper.createHorizontalHelper(layoutManager);
         }

@@ -18,12 +18,12 @@ public class ToastUtils {
 
     @SuppressLint("ShowToast")
     public static void showToast(Context context, String message) {
-        if (mToast == null) {
-            mToast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
-        } else {
-            mToast.setDuration(Toast.LENGTH_SHORT);
-            mToast.setText(message);
+        if (mToast != null) {
+            mToast.cancel();
         }
+        mToast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        mToast.setDuration(Toast.LENGTH_SHORT);
+        mToast.setText(message);
         mToast.show();
     }
 }

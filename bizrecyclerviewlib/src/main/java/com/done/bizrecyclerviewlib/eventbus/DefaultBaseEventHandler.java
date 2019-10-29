@@ -1,6 +1,7 @@
 package com.done.bizrecyclerviewlib.eventbus;
 
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.done.bizrecyclerviewlib.Preconditions;
 

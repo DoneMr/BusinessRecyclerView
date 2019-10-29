@@ -1,14 +1,12 @@
 package com.done.bizrecyclerviewlib.adpater;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.done.bizrecyclerviewlib.Preconditions;
 import com.done.bizrecyclerviewlib.cell.IBizCell;
-import com.done.bizrecyclerviewlib.util.BizLogger;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
