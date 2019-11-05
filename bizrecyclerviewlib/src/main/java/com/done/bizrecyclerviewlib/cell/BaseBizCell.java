@@ -39,7 +39,7 @@ public abstract class BaseBizCell<T> implements IBizCell<T> {
     @Override
     public void onBindViewHolder(@NonNull BizViewHolder holder, int position, @NonNull List<Object> payloads) {
         mRootView = holder.getItemView();
-        binViewHolder(holder, position);
+        bindViewHolder(holder, position);
     }
 
     @Override
@@ -71,7 +71,7 @@ public abstract class BaseBizCell<T> implements IBizCell<T> {
 
     @Override
     public void onBindViewHolder(@NonNull BizViewHolder viewHolder, int position) {
-        binViewHolder(viewHolder, position);
+        bindViewHolder(viewHolder, position);
     }
 
     @Override
@@ -152,7 +152,7 @@ public abstract class BaseBizCell<T> implements IBizCell<T> {
         notifySelf(mPos);
     }
 
-    protected abstract void binViewHolder(@NonNull BizViewHolder viewHolder, int position);
+    protected abstract void bindViewHolder(@NonNull BizViewHolder viewHolder, int position);
 
     protected abstract void onRelease(@NonNull RecyclerView.ViewHolder holder);
 

@@ -21,7 +21,7 @@ public class NormalCell3 extends BaseBizCell<NormalCellViewType> {
     }
 
     @Override
-    protected void binViewHolder(@NonNull BizViewHolder viewHolder, int position) {
+    protected void bindViewHolder(@NonNull BizViewHolder viewHolder, int position) {
         String htmlString = "<font>" + this.getClass().getSimpleName() + ",</font>" + "<font color=\"#FF0000\">" + "pos：" + position + "</font>";
         viewHolder.setHtmlText(R.id.tv_title, htmlString);
         if (mData != null) {

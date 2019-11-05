@@ -29,7 +29,7 @@ public class SenderCell extends BaseBizCell<ComnuicationViewModel> implements Vi
     }
 
     @Override
-    protected void binViewHolder(@NonNull BizViewHolder viewHolder, int position) {
+    protected void bindViewHolder(@NonNull BizViewHolder viewHolder, int position) {
         viewHolder.setText(R.id.tv_title, getClass().getSimpleName() + ",pos:" + position, "#0000FF");
         viewHolder.setText(R.id.tv_content, mData.getContent());
         mTvContent = viewHolder.findViewById(R.id.tv_content);

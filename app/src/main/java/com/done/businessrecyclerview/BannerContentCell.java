@@ -20,7 +20,7 @@ public class BannerContentCell extends BaseBizCell<Integer> {
     }
 
     @Override
-    protected void binViewHolder(@NonNull BizViewHolder viewHolder, int position) {
+    protected void bindViewHolder(@NonNull BizViewHolder viewHolder, int position) {
         viewHolder.setBackgroundColor(R.id.ll_banner_content, mData);
     }
 

@@ -26,7 +26,7 @@ dependencies {
     implementation project(':bizrecyclerviewlib')
     api 'androidx.constraintlayout:constraintlayout:1.1.3'
     api 'androidx.appcompat:appcompat:1.1.0'
-
+    api 'com.google.android.material:material:1.0.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
     // Optional, if you use support library fragments:

@@ -28,7 +28,7 @@ public class BannerCell extends BaseBizCell<BannerCell.ViewModel> {
     }
 
     @Override
-    protected void binViewHolder(@NonNull BizViewHolder viewHolder, int position) {
+    protected void bindViewHolder(@NonNull BizViewHolder viewHolder, int position) {
         if (mRecyclerView == null) {
             mRecyclerView = viewHolder.findViewById(R.id.rv_banner);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(viewHolder.getContext(),
