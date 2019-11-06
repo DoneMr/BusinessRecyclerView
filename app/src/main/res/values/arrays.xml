@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="samples">
+        <item>Single RecyclerView</item>
+        <item>Communication RecyclerView</item>
+        <item>Delete RecyclerView</item>
+        <item>All Feature RecyclerView</item>
+        <item>Multi RecyclerView</item>
+        <item>LayoutManager</item>
+    </string-array>
+</resources>

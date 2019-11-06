@@ -1,5 +1,7 @@
 package com.done.businessrecyclerview.model;
 
+import android.content.Intent;
+
 /**
  * File:com.done.businessrecyclerview.model.CellTextInfo
  * Description:xxx
@@ -8,9 +10,20 @@ package com.done.businessrecyclerview.model;
  * @date 2019-11-05
  */
 public class CellTextInfo {
+
     private String text;
     private String textSize;
     private String textColor;
+
+    private Intent jumpIntent;
+
+    public Intent getJumpIntent() {
+        return jumpIntent;
+    }
+
+    public void setJumpIntent(Intent jumpIntent) {
+        this.jumpIntent = jumpIntent;
+    }
 
     public String getText() {
         return text;

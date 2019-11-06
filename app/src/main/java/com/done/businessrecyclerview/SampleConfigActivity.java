@@ -16,11 +16,15 @@ public class SampleConfigActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        for (int i = 0; i < 20; i++) {
-            CellTextInfo data = new CellTextInfo();
-            data.setText("");
-            data.setTextColor("#FF0000");
-            mAdapter.add(new CardTextCell(data));
+        String[] stringArray = mContext.getResources().getStringArray(R.array.samples);
+        if (stringArray.length > 0) {
+            for (int i = 0; i < stringArray.length; i++) {
+                CellTextInfo data = new CellTextInfo();
+                data.setText(stringArray[i]);
+                data.setTextColor("#FF0000");
+                data.setTextSize("20");
+                mAdapter.add(new CardTextCell(data));
+            }
         }
     }
 

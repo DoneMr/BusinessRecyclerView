@@ -87,6 +87,12 @@ public class BizViewHolder extends RecyclerView.ViewHolder {
         setTextColor(viewId, textColor);
     }
 
+    public void setText(final int viewId, String text, String textColor, String textSize) {
+        setText(viewId, text);
+        setTextColor(viewId, textColor);
+        setTextSize(viewId, textSize);
+    }
+
     public void setText(final int viewId, String text, @ColorInt int textColor) {
         setText(viewId, text);
         setTextColor(viewId, textColor);
@@ -163,6 +169,20 @@ public class BizViewHolder extends RecyclerView.ViewHolder {
                 } else if (view instanceof TextView) {
                     ((TextView) view).setTextSize(textSizeSp);
                 }
+            }
+        }
+    }
+
+    public void setTextSize(final int viewId, String textSizeSp) {
+        if (!TextUtils.isEmpty(textSizeSp)) {
+            float textSize = 0;
+            try {
+                textSize = Float.parseFloat(textSizeSp);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            if (textSize > 0) {
+                setTextSize(viewId, textSize);
             }
         }
     }

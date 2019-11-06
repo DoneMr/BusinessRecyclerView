@@ -28,7 +28,7 @@ import java.util.List;
  * date 2018/12/13
  */
 
-public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView.Adapter<BizViewHolder>
+public abstract class BizBaseAdapter extends RecyclerView.Adapter<BizViewHolder>
         implements DefaultBaseEventHandler.OnMessageListener,
         BizDefaultAnimator.AnimationListener, ILifecycleProxy {
 
@@ -180,6 +180,14 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
     }
 
     @Override
+    public void deleteItem(int pos) {
+        List<IBizCell> allCells = mTypePool.getAllCells();
+        if (pos <= allCells.size()) {
+            remove(pos);
+        }
+    }
+
+    @Override
     public void notifyItemDataChanged(int pos) {
         notifyDataChange(pos);
     }
@@ -315,11 +323,11 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
 
     //-------------------------对外提供的可操作的方法-----------------------//
 
-    public int getCellViewType(Cell cell) {
+    public <Cell extends IBizCell> int getCellViewType(Cell cell) {
         return mTypePool.getViewType(cell.getClass());
     }
 
-    public void add(Cell cell) {
+    public <Cell extends IBizCell> void add(Cell cell) {
         setCellHandler(cell);
         int pos = mTypePool.addCell(cell);
         setAnimStatus(NOTIFY_STATUS.ADD);
@@ -330,7 +338,7 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
         mCurStatus = status;
     }
 
-    public void add(int pos, Cell cell) {
+    public <Cell extends IBizCell> void add(int pos, Cell cell) {
         setCellHandler(cell);
         mTypePool.addCell(pos, cell);
         setAnimStatus(NOTIFY_STATUS.ADD);
@@ -342,7 +350,7 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
         }
     }
 
-    public void addCells(List<Cell> cells) {
+    public <Cell extends IBizCell> void addCells(List<Cell> cells) {
         for (Cell cell : cells) {
             setCellHandler(cell);
         }
@@ -355,7 +363,7 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
         }
     }
 
-    private void setCellHandler(Cell cell) {
+    private <Cell extends IBizCell> void setCellHandler(Cell cell) {
         Preconditions.checkNotNull(cell);
         cell.setEventHandler(mEventHandler);
     }
@@ -366,7 +374,7 @@ public abstract class BizBaseAdapter<Cell extends IBizCell> extends RecyclerView
      *
      * @param cell
      */
-    public void remove(Cell cell) {
+    public <Cell extends IBizCell> void remove(Cell cell) {
         int index = mTypePool.firstIndexOf(cell);
         remove(index);
     }

@@ -73,6 +73,11 @@ public interface IBizCell<T> {
     void notifySelf(int pos);
 
     /**
+     * 干掉自己
+     */
+    void deleteSelf();
+
+    /**
      * 获取cell中的数据源
      *
      * @return

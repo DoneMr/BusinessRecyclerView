@@ -22,19 +22,28 @@ public abstract class BaseEventHandler extends Handler {
 
     public static final int NOTIFY_ITEM = -1;
 
+    public static final int DELETE_SELF = -2;
+
     public static final int BROADCAST_DATA = -100;
 
     public BaseEventHandler() {
         super(Looper.getMainLooper());
     }
 
+    /**
+     * 目前arg1 为对应item的pos
+     *
+     * @param msg
+     */
     @Override
     public void handleMessage(Message msg) {
         BizLogger.d(TAG, "--->收到来自:" + msg.what + "," + msg.obj);
-        if (msg.arg1 == NOTIFY_ITEM) {
+        if (msg.what == NOTIFY_ITEM) {
             notifyItem(msg.what);
-        } else {
-            handleData(msg.what, msg.obj);
+        } else if (msg.what == DELETE_SELF) {
+            deleteItem(msg.arg1);
+        } else if (msg.what == BROADCAST_DATA) {
+            handleData(msg.arg1, msg.obj);
         }
     }
 
@@ -50,5 +59,7 @@ public abstract class BaseEventHandler extends Handler {
     protected abstract void handleData(int pos, @Nullable Object data);
 
     protected abstract void notifyItem(int index);
+
+    protected abstract void deleteItem(int index);
 
 }

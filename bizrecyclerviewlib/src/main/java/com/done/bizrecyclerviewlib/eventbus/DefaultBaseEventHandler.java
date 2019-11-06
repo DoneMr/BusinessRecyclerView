@@ -39,9 +39,19 @@ public class DefaultBaseEventHandler extends BaseEventHandler {
         }
     }
 
+    @Override
+    protected void deleteItem(int index) {
+        if (mListener != null) {
+            mListener.deleteItem(index);
+        }
+    }
+
     public interface OnMessageListener {
+
         void onReceive(int pos, @Nullable Object data);
 
         void notifyItemDataChanged(int pos);
+
+        void deleteItem(int pos);
     }
 }

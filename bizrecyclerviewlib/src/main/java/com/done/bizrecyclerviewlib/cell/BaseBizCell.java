@@ -86,7 +86,12 @@ public abstract class BaseBizCell<T> implements IBizCell<T> {
 
     @Override
     public void postMessageDelay(int pos, @Nullable Object data, long delayMillisecond) {
-        mBaseEventHandler.sendMessageDelayed(mBaseEventHandler.obtainMessage(pos, data), delayMillisecond);
+        mBaseEventHandler.sendMessageDelayed(mBaseEventHandler.obtainMessage(BaseEventHandler.BROADCAST_DATA, pos, 0, data), delayMillisecond);
+    }
+
+    @Override
+    public void deleteSelf() {
+        mBaseEventHandler.sendMessage(mBaseEventHandler.obtainMessage(BaseEventHandler.DELETE_SELF, mPos, 0, null));
     }
 
     @Override
@@ -100,7 +105,7 @@ public abstract class BaseBizCell<T> implements IBizCell<T> {
 
     @Override
     public final void notifySelf(int pos) {
-        mBaseEventHandler.obtainMessage(pos, BaseEventHandler.NOTIFY_ITEM, 0).sendToTarget();
+        mBaseEventHandler.obtainMessage(BaseEventHandler.NOTIFY_ITEM, pos, 0).sendToTarget();
     }
 
     @Override
