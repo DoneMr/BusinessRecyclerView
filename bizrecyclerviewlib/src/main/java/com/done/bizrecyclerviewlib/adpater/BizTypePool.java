@@ -132,7 +132,7 @@ public final class BizTypePool implements TypePool {
     @NonNull
     @Override
     public IBizCell getCell(int index) {
-        return mCellList.get(index);
+        return (index <= mCellList.size() - 1 && index > -1) ? mCellList.get(index) : null;
     }
 
     @Nullable

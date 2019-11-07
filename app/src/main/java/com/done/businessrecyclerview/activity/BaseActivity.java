@@ -1,5 +1,6 @@
-package com.done.businessrecyclerview;
+package com.done.businessrecyclerview.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -7,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
- * File:com.done.businessrecyclerview.BaseActivity
+ * File:com.done.businessrecyclerview.activity.BaseActivity
  * Description:xxx
  *
  * @author maruilong
@@ -19,11 +20,21 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        onActivityCreateBefore();
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(getLayoutId());
+        onInitViewBefore();
         initView();
         initData();
+    }
+
+    public void onInitViewBefore() {
+
+    }
+
+    public void onActivityCreateBefore() {
+
     }
 
     protected abstract void initData();

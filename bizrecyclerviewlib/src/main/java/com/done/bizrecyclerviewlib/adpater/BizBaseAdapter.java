@@ -173,7 +173,7 @@ public abstract class BizBaseAdapter extends RecyclerView.Adapter<BizViewHolder>
         List<IBizCell> allCells = mTypePool.getAllCells();
         for (int i = 0; i < allCells.size(); i++) {
             IBizCell cell = allCells.get(i);
-            if (cell.getPos() != pos) {
+            if (cell.getPos() != pos && cell.isReceiveMessage()) {
                 cell.handleMessage(pos, data);
             }
         }
@@ -216,6 +216,16 @@ public abstract class BizBaseAdapter extends RecyclerView.Adapter<BizViewHolder>
         }
     }
 
+    public final boolean isSupportLeftDrag(int viewType) {
+        IBizCell cellForType = mTypePool.getCellForType(viewType);
+        return cellForType != null && cellForType.isSupportLeftDrag();
+    }
+
+    public final boolean isSupportRightDrag(int viewType) {
+        IBizCell cellForType = mTypePool.getCellForType(viewType);
+        return cellForType != null && cellForType.isSupportRightDrag();
+    }
+
     @Override
     public void onAddFinished(RecyclerView.ViewHolder item) {
         if (mCurStatus == NOTIFY_STATUS.ADD) {
@@ -241,14 +251,7 @@ public abstract class BizBaseAdapter extends RecyclerView.Adapter<BizViewHolder>
     }
 
     private void postNotify() {
-        if (mEventHandler != null) {
-            mEventHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    notifyDataSetChanged();
-                }
-            });
-        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -382,14 +385,12 @@ public abstract class BizBaseAdapter extends RecyclerView.Adapter<BizViewHolder>
     public void remove(int start, int end) {
         setAnimStatus(NOTIFY_STATUS.REMOVE);
         for (int i = start; i < end + 1; i++) {
-            mEventHandler.removeMessage(i);
             mTypePool.removeCell(i);
         }
         postNotify();
     }
 
     public void remove(int index) {
-        mEventHandler.removeMessage(index);
         mTypePool.removeCell(index);
         if (isAnimate) {
             setAnimStatus(NOTIFY_STATUS.REMOVE);
@@ -405,16 +406,13 @@ public abstract class BizBaseAdapter extends RecyclerView.Adapter<BizViewHolder>
         postNotify();
     }
 
-    public final boolean isSupportDelete(int viewType) {
-        IBizCell cellForType = mTypePool.getCellForType(viewType);
-        return cellForType != null && cellForType.isSupportDelete();
-    }
-
     public final void broadcastAllCell(@Nullable Object data) {
         List<IBizCell> allCells = mTypePool.getAllCells();
         for (int i = 0; i < allCells.size(); i++) {
             IBizCell cell = allCells.get(i);
-            cell.handleMessage(BaseEventHandler.BROADCAST_DATA, data);
+            if (cell.isReceiveMessage()) {
+                cell.handleMessage(BaseEventHandler.BROADCAST_DATA, data);
+            }
         }
     }
 

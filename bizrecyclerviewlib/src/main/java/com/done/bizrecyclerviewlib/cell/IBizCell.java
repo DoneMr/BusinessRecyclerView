@@ -38,7 +38,9 @@ public interface IBizCell<T> {
 
     int getPos();
 
-    boolean isSupportDelete();
+    boolean isSupportLeftDrag();
+
+    boolean isSupportRightDrag();
 
     /**
      * 上层传递过来的消息发送者，此接口基类实现，与子类之间无关
@@ -50,20 +52,29 @@ public interface IBizCell<T> {
     /**
      * cell 发送消息
      *
-     * @param pos  当前位置
      * @param data 数据
      */
-    void postMessage(int pos, @Nullable Object data);
+    void postMessage(@Nullable Object data);
 
-    void postMessageDelay(int pos, @Nullable Object data, long delayMillisecond);
+    void postMessageDelay(@Nullable Object data, long delayMillisecond);
 
     /**
      * 处理来自其他cell的消息
+     * 这里回调的时候，cell是没有实质上的view存在的，唯一存在的是cell对象本身和mData。
+     * 所以请不要再这里面去更新View，您可以选择更新你的mData，然后在bindView的时候去展示数据
      *
      * @param sourcePos 来源cell的pos 当pos=-100时，消息来自外部，所有cell都会受到此消息{@link BaseEventHandler#BROADCAST_DATA}
      * @param data
      */
     void handleMessage(int sourcePos, @Nullable Object data);
+
+    /**
+     * cell可以选择是否接收来自别的cell的消息，这里返回true，才能收到{@link #handleMessage(int, Object)}的回调
+     * 默认返回false
+     *
+     * @return
+     */
+    boolean isReceiveMessage();
 
     /**
      * 通知刷新自身

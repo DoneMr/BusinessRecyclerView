@@ -41,11 +41,6 @@ public class DeleteCell extends BaseBizCell<ComnuicationViewModel> {
     }
 
     @Override
-    public boolean isSupportDelete() {
-        return true;
-    }
-
-    @Override
     public void handleMessage(int sourcePos, @Nullable Object data) {
         StringBuilder stringBuilder = new StringBuilder(mData.getContent());
         String message = "\nreceiveMessage(" + sourcePos + "):" + (data == null ? "null" : data.toString());

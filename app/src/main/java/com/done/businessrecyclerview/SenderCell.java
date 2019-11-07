@@ -38,7 +38,7 @@ public class SenderCell extends BaseBizCell<ComnuicationViewModel> implements Vi
             @Override
             public boolean onLongClick(View v) {
                 String sendMsg = "我延时发了一条数据给其他cell";
-                postMessageDelay(mPos, sendMsg, 5 * 1000);
+                postMessageDelay(sendMsg, 5 * 1000);
                 return true;
             }
         });
@@ -66,7 +66,7 @@ public class SenderCell extends BaseBizCell<ComnuicationViewModel> implements Vi
     @Override
     public void onClick(View v) {
         String sendMsg = "我发了一条数据给其他cell";
-        postMessage(mPos, sendMsg);
+        postMessage(sendMsg);
         ToastUtils.showToast(v.getContext(), sendMsg);
     }
 

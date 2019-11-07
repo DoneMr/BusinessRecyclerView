@@ -58,16 +58,12 @@ public class BannerCell extends BaseBizCell<BannerCell.ViewModel> {
     }
 
     @Override
-    public boolean isSupportDelete() {
-        return false;
-    }
-
-    @Override
     public int getLayoutId() {
         return R.layout.cell_main_banner;
     }
 
     public static class ViewModel {
+
         private int[] bgColor;
 
         public int[] getBgColor() {

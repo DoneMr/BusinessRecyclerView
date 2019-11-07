@@ -39,7 +39,7 @@ public abstract class BaseEventHandler extends Handler {
     public void handleMessage(Message msg) {
         BizLogger.d(TAG, "--->收到来自:" + msg.what + "," + msg.obj);
         if (msg.what == NOTIFY_ITEM) {
-            notifyItem(msg.what);
+            notifyItem(msg.arg1);
         } else if (msg.what == DELETE_SELF) {
             deleteItem(msg.arg1);
         } else if (msg.what == BROADCAST_DATA) {

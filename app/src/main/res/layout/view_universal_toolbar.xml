@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
+    android:background="@color/colorPrimary"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
@@ -10,7 +10,7 @@
         android:id="@+id/iv_left"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:scaleType="centerCrop"
+        android:scaleType="center"
         android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
     <TextView
@@ -31,6 +31,6 @@
         android:id="@+id/iv_right"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:scaleType="centerCrop"
+        android:scaleType="center"
         android:src="@drawable/ic_menu_black_24dp" />
 </LinearLayout>

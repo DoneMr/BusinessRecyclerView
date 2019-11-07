@@ -30,6 +30,8 @@ public abstract class BaseBizCell<T> implements IBizCell<T> {
 
     protected View mRootView;
 
+    protected BizViewHolder mHolder;
+
     private BaseEventHandler mBaseEventHandler;
 
     public BaseBizCell(T data) {
@@ -38,6 +40,8 @@ public abstract class BaseBizCell<T> implements IBizCell<T> {
 
     @Override
     public void onBindViewHolder(@NonNull BizViewHolder holder, int position, @NonNull List<Object> payloads) {
+        mPos = holder.getAdapterPosition();
+        mHolder = holder;
         mRootView = holder.getItemView();
         bindViewHolder(holder, position);
     }
@@ -49,7 +53,6 @@ public abstract class BaseBizCell<T> implements IBizCell<T> {
 
     @Override
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
-        mPos = holder.getAdapterPosition();
         BizLogger.d(TAG, getClass().getName() + " onViewAttachedToWindow:" + mPos);
     }
 
@@ -80,13 +83,23 @@ public abstract class BaseBizCell<T> implements IBizCell<T> {
     }
 
     @Override
-    public void postMessage(int pos, @Nullable Object data) {
-        postMessageDelay(pos, data, 0);
+    public boolean isSupportLeftDrag() {
+        return false;
     }
 
     @Override
-    public void postMessageDelay(int pos, @Nullable Object data, long delayMillisecond) {
-        mBaseEventHandler.sendMessageDelayed(mBaseEventHandler.obtainMessage(BaseEventHandler.BROADCAST_DATA, pos, 0, data), delayMillisecond);
+    public boolean isSupportRightDrag() {
+        return false;
+    }
+
+    @Override
+    public void postMessage(@Nullable Object data) {
+        postMessageDelay(data, 0);
+    }
+
+    @Override
+    public void postMessageDelay(@Nullable Object data, long delayMillisecond) {
+        mBaseEventHandler.sendMessageDelayed(mBaseEventHandler.obtainMessage(BaseEventHandler.BROADCAST_DATA, mPos, 0, data), delayMillisecond);
     }
 
     @Override
@@ -100,17 +113,17 @@ public abstract class BaseBizCell<T> implements IBizCell<T> {
     }
 
     @Override
+    public boolean isReceiveMessage() {
+        return false;
+    }
+
+    @Override
     public void handleMessage(int sourcePos, @Nullable Object data) {
     }
 
     @Override
     public final void notifySelf(int pos) {
         mBaseEventHandler.obtainMessage(BaseEventHandler.NOTIFY_ITEM, pos, 0).sendToTarget();
-    }
-
-    @Override
-    public boolean isSupportDelete() {
-        return false;
     }
 
     @Override

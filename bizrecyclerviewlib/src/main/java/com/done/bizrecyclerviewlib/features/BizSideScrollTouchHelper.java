@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.done.bizrecyclerviewlib.adpater.BizBaseAdapter;
+import com.done.bizrecyclerviewlib.cell.BaseBizCell;
 
 /**
  * File:BusinessRecyclerView.com.done.bizrecyclerviewlib.features.BizSideScrollTouchHelper
@@ -32,9 +33,11 @@ public class BizSideScrollTouchHelper extends BaseBizTouchHelper {
         if (layoutManager instanceof LinearLayoutManager && !(layoutManager instanceof GridLayoutManager)) {
             boolean isVertical = (((LinearLayoutManager) layoutManager).getOrientation() == LinearLayoutManager.VERTICAL);
             if (BizBaseAdapter.class.isAssignableFrom(mAdapter.getClass()) && isVertical) {
-                boolean isSupportDelete = ((BizBaseAdapter) mAdapter).isSupportDelete(viewHolder.getItemViewType());
-                if (isSupportDelete) {
-                    swipeFlag = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+                if (((BizBaseAdapter) mAdapter).getCell(viewHolder.getAdapterPosition()).isSupportLeftDrag()) {
+                    swipeFlag |= ItemTouchHelper.LEFT;
+                }
+                if (((BizBaseAdapter) mAdapter).getCell(viewHolder.getAdapterPosition()).isSupportRightDrag()) {
+                    swipeFlag |= ItemTouchHelper.RIGHT;
                 }
             }
         }
@@ -52,25 +55,22 @@ public class BizSideScrollTouchHelper extends BaseBizTouchHelper {
     }
 
     @Override
-    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        if (BizBaseAdapter.class.isAssignableFrom(mAdapter.getClass())
-                && (i == ItemTouchHelper.LEFT || i == ItemTouchHelper.RIGHT)) {
-            int adapterPosition = viewHolder.getAdapterPosition();
-            ((BizBaseAdapter) mAdapter).remove(adapterPosition);
-        }
+    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
     }
 
     @Override
-    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder,
+                            float dX, float dY, int actionState, boolean isCurrentlyActive) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            viewHolder.itemView.scrollTo(-(int) dX, 0);
         } else {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     }
 
-    public interface OnSwipeListener {
-
-        void onSwiping(RecyclerView.ViewHolder viewHolder, int direction);
+    @Override
+    public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+        super.clearView(recyclerView, viewHolder);
+        viewHolder.itemView.setScrollX(0);
     }
 }

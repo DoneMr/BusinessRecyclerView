@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * @author maruilong
  * date 2018/12/15 星期六
  */
-public abstract class BaseBizTouchHelper extends ItemTouchHelper.Callback{
+public abstract class BaseBizTouchHelper extends ItemTouchHelper.Callback {
 
     protected final RecyclerView.Adapter mAdapter;
 

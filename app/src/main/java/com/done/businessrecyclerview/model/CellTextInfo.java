@@ -17,6 +17,13 @@ public class CellTextInfo {
 
     private Intent jumpIntent;
 
+    /**
+     * 是否展示接受的消息，默认不还在那时
+     */
+    public boolean isShowReceive = false;
+
+    public String receiveText = "";
+
     public Intent getJumpIntent() {
         return jumpIntent;
     }

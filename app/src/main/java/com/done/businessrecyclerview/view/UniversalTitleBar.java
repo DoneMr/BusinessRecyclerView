@@ -1,6 +1,8 @@
 package com.done.businessrecyclerview.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -40,7 +42,7 @@ public class UniversalTitleBar extends FrameLayout implements View.OnClickListen
 
     public UniversalTitleBar(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context);
+        initView(context, attrs, defStyleAttr);
     }
 
     public OnToolBarClick getOnToolBarClick() {
@@ -51,12 +53,27 @@ public class UniversalTitleBar extends FrameLayout implements View.OnClickListen
         this.onToolBarClick = onToolBarClick;
     }
 
-    private void initView(Context context) {
+    private void initView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         mContext = context;
         mRootView = inflate(mContext, R.layout.view_universal_toolbar, this);
         mIvLeft = mRootView.findViewById(R.id.iv_left);
         mIvRight = mRootView.findViewById(R.id.iv_right);
         mTvTitle = mRootView.findViewById(R.id.tv_title);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.UniversalTitleBar, defStyleAttr, 0);
+        if (attrs != null) {
+            String title = a.getString(R.styleable.UniversalTitleBar_title);
+            if (!TextUtils.isEmpty(title)) {
+                mTvTitle.setText(title);
+            }
+            a.recycle();
+        }
+        mIvLeft.setOnClickListener(this);
+        mIvRight.setOnClickListener(this);
+        mTvTitle.setOnClickListener(this);
+    }
+
+    public TextView getTitleView() {
+        return mTvTitle;
     }
 
     @Override
