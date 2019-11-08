@@ -35,7 +35,9 @@ public class SampleConfigActivity extends BaseActivity {
                     jumpIntent.setClassName(mContext.getPackageName(),
                             "com.done.businessrecyclerview.activity.CommunicationRecyclerViewActivity");
                 } else if (SampleContants.DELETE_RECYCLERVIEW.equals(text)) {
-
+                    jumpIntent = new Intent();
+                    jumpIntent.setClassName(mContext.getPackageName(),
+                            "com.done.businessrecyclerview.activity.DeleteRecyclerViewActivity");
                 } else if (SampleContants.ALL_FEATURE_RECYCLERVIEW.equals(text)) {
 
                 } else if (SampleContants.MULTI_RECYCLERVIEW.equals(text)) {

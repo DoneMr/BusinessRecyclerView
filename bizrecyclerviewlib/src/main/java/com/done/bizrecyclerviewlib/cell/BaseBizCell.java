@@ -83,16 +83,6 @@ public abstract class BaseBizCell<T> implements IBizCell<T> {
     }
 
     @Override
-    public boolean isSupportLeftDrag() {
-        return false;
-    }
-
-    @Override
-    public boolean isSupportRightDrag() {
-        return false;
-    }
-
-    @Override
     public void postMessage(@Nullable Object data) {
         postMessageDelay(data, 0);
     }

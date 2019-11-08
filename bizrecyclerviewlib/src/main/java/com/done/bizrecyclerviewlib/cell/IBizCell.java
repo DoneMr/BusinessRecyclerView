@@ -38,10 +38,6 @@ public interface IBizCell<T> {
 
     int getPos();
 
-    boolean isSupportLeftDrag();
-
-    boolean isSupportRightDrag();
-
     /**
      * 上层传递过来的消息发送者，此接口基类实现，与子类之间无关
      *

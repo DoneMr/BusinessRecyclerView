@@ -4,7 +4,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.done.bizrecyclerviewlib.BizRecyclerView;
@@ -15,7 +14,6 @@ import com.done.bizrecyclerviewlib.eventbus.DefaultBaseEventHandler;
 import com.done.bizrecyclerviewlib.features.BaseBizSnapHelper;
 import com.done.bizrecyclerviewlib.features.BizDefaultAnimator;
 import com.done.bizrecyclerviewlib.features.BizPagerSnapHelper;
-import com.done.bizrecyclerviewlib.features.BizSideScrollTouchHelper;
 import com.done.bizrecyclerviewlib.holder.BizViewHolder;
 
 import java.util.List;
@@ -40,7 +38,7 @@ public abstract class BizBaseAdapter extends RecyclerView.Adapter<BizViewHolder>
 
     private boolean pageScroll = false;
 
-    private ItemTouchHelper mItemTouchHelper;
+//    private ItemTouchHelper mItemTouchHelper;
 
     private BizDefaultAnimator mItemAnimator;
 
@@ -61,7 +59,7 @@ public abstract class BizBaseAdapter extends RecyclerView.Adapter<BizViewHolder>
     public BizBaseAdapter() {
         this.mTypePool = new BizTypePool();
         mEventHandler = new DefaultBaseEventHandler(this);
-        mItemTouchHelper = new ItemTouchHelper(new BizSideScrollTouchHelper(this));
+//        mItemTouchHelper = new ItemTouchHelper(new BizSideScrollTouchHelper(this));
         mItemAnimator = new BizDefaultAnimator();
         mItemAnimator.setAnimationListener(this);
         mSnapHelper = new BizPagerSnapHelper();
@@ -128,7 +126,7 @@ public abstract class BizBaseAdapter extends RecyclerView.Adapter<BizViewHolder>
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         mRecyclerView = recyclerView;
-        mItemTouchHelper.attachToRecyclerView(recyclerView);
+//        mItemTouchHelper.attachToRecyclerView(recyclerView);
         if (recyclerView instanceof BizRecyclerView) {
             isAnimate = ((BizRecyclerView) recyclerView).hasAnimate();
             recyclerView.setItemAnimator(mItemAnimator);
@@ -214,16 +212,6 @@ public abstract class BizBaseAdapter extends RecyclerView.Adapter<BizViewHolder>
         } else {
             mSnapHelper.attachToRecyclerView(null);
         }
-    }
-
-    public final boolean isSupportLeftDrag(int viewType) {
-        IBizCell cellForType = mTypePool.getCellForType(viewType);
-        return cellForType != null && cellForType.isSupportLeftDrag();
-    }
-
-    public final boolean isSupportRightDrag(int viewType) {
-        IBizCell cellForType = mTypePool.getCellForType(viewType);
-        return cellForType != null && cellForType.isSupportRightDrag();
     }
 
     @Override

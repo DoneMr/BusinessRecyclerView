@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.done.bizrecyclerviewlib.annotation.CellFlag;
 import com.done.bizrecyclerviewlib.cell.BaseBizCell;
 import com.done.bizrecyclerviewlib.holder.BizViewHolder;
 import com.done.businessrecyclerview.R;
@@ -22,6 +23,7 @@ import com.done.businessrecyclerview.util.SampleUtils;
  * @author maruilong
  * @date 2019-11-05
  */
+@CellFlag(flag = "CardTextCell")
 public class CardTextCell extends BaseBizCell<CellTextInfo> implements View.OnClickListener {
 
     private TextView mTvTitle, mTvContent, mTvReceive;
@@ -49,16 +51,6 @@ public class CardTextCell extends BaseBizCell<CellTextInfo> implements View.OnCl
     }
 
     @Override
-    public boolean isSupportLeftDrag() {
-        return true;
-    }
-
-    @Override
-    public boolean isSupportRightDrag() {
-        return false;
-    }
-
-    @Override
     protected void onRelease(@NonNull RecyclerView.ViewHolder holder) {
 
     }
@@ -72,6 +64,7 @@ public class CardTextCell extends BaseBizCell<CellTextInfo> implements View.OnCl
     public void handleMessage(int sourcePos, @Nullable Object data) {
         StringBuilder stringBuilder = new StringBuilder(mData.receiveText);
         stringBuilder.append("\n")
+                .append("我是" + mPos + "_Cell,")
                 .append(SampleUtils.getStringMessage(sourcePos, data));
         mData.receiveText = stringBuilder.toString();
         refreshSelf();

@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 
 import com.done.bizrecyclerviewlib.cell.IBizCell;
 import com.done.businessrecyclerview.cell.CardTextCell;
+import com.done.businessrecyclerview.cell.DeleteCell;
 import com.done.businessrecyclerview.cell.SendMessageCell;
 import com.done.businessrecyclerview.constant.SampleContants;
 import com.done.businessrecyclerview.model.CellTextInfo;
@@ -59,11 +60,27 @@ public final class SampleUtils {
     }
 
     public static String getStringMessage(int sourcePos, @Nullable Object data) {
-        return ("接收到来自:" + sourcePos + "_Cell 的消息：" + (data == null ? "" : data.toString()));
+        return ("接收到来自:" + sourcePos + "_Cell 的消息：\n" + (data == null ? "" : data.toString()));
     }
 
     public static String getCurTime() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return simpleDateFormat.format(new Date(System.currentTimeMillis()));
+    }
+
+    public static List<IBizCell> getDeleteCells() {
+        List<IBizCell> cells = new ArrayList<>();
+        for (int i = 0; i < SampleContants.LIST_PAGE_SIZE; i++) {
+            CellTextInfo data = new CellTextInfo();
+            data.setText("");
+            data.setTextColor("");
+            data.setTextSize("20");
+            cells.add(new DeleteCell(data));
+        }
+        return cells;
+    }
+
+    public static boolean isListEmpty(List list) {
+        return (list == null || list.size() == 0);
     }
 }

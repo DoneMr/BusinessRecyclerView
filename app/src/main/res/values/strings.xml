@@ -2,4 +2,5 @@
     <string name="app_name">BusinessRecyclerView</string>
     <string name="single_recycler_view">Single RecyclerView</string>
     <string name="communication_recycler_view">Communication RecyclerView</string>
+    <string name="delete_recycler_view">Delete RecyclerView</string>
 </resources>

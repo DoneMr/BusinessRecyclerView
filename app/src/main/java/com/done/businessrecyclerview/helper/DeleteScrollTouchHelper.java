@@ -1,4 +1,4 @@
-package com.done.bizrecyclerviewlib.features;
+package com.done.businessrecyclerview.helper;
 
 import android.graphics.Canvas;
 
@@ -9,18 +9,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.done.bizrecyclerviewlib.adpater.BizBaseAdapter;
-import com.done.bizrecyclerviewlib.cell.BaseBizCell;
+import com.done.bizrecyclerviewlib.features.BaseBizTouchHelper;
 
 /**
- * File:BusinessRecyclerView.com.done.bizrecyclerviewlib.features.BizSideScrollTouchHelper
+ * File:BusinessRecyclerView.com.done.bizrecyclerviewlib.features.DeleteScrollTouchHelper
  * Description:侧滑辅助滑动对象，只兼顾LinearLayoutManager{@link RecyclerView.LayoutManager}
  *
  * @author maruilong
  * date 2018/12/14 星期五
  */
-public class BizSideScrollTouchHelper extends BaseBizTouchHelper {
+public class DeleteScrollTouchHelper extends BaseBizTouchHelper {
 
-    public BizSideScrollTouchHelper(RecyclerView.Adapter adapter) {
+    public DeleteScrollTouchHelper(RecyclerView.Adapter adapter) {
         super(adapter);
     }
 
@@ -33,12 +33,7 @@ public class BizSideScrollTouchHelper extends BaseBizTouchHelper {
         if (layoutManager instanceof LinearLayoutManager && !(layoutManager instanceof GridLayoutManager)) {
             boolean isVertical = (((LinearLayoutManager) layoutManager).getOrientation() == LinearLayoutManager.VERTICAL);
             if (BizBaseAdapter.class.isAssignableFrom(mAdapter.getClass()) && isVertical) {
-                if (((BizBaseAdapter) mAdapter).getCell(viewHolder.getAdapterPosition()).isSupportLeftDrag()) {
-                    swipeFlag |= ItemTouchHelper.LEFT;
-                }
-                if (((BizBaseAdapter) mAdapter).getCell(viewHolder.getAdapterPosition()).isSupportRightDrag()) {
-                    swipeFlag |= ItemTouchHelper.RIGHT;
-                }
+                swipeFlag = ItemTouchHelper.LEFT;
             }
         }
         return makeMovementFlags(dragFlag, swipeFlag);
@@ -47,6 +42,12 @@ public class BizSideScrollTouchHelper extends BaseBizTouchHelper {
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
         return false;
+    }
+
+    @Override
+    public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+        super.clearView(recyclerView, viewHolder);
+        viewHolder.itemView.scrollTo(0, 0);
     }
 
     @Override
@@ -66,11 +67,5 @@ public class BizSideScrollTouchHelper extends BaseBizTouchHelper {
         } else {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
-    }
-
-    @Override
-    public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-        super.clearView(recyclerView, viewHolder);
-        viewHolder.itemView.setScrollX(0);
     }
 }
