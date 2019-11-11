@@ -51,18 +51,26 @@ public class DeleteScrollTouchHelper extends BaseBizTouchHelper {
     }
 
     @Override
+    public boolean canDropOver(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder current, @NonNull RecyclerView.ViewHolder target) {
+        return super.canDropOver(recyclerView, current, target);
+    }
+
+    @Override
     public boolean isItemViewSwipeEnabled() {
-        return true;
+        return dX < 100;
     }
 
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
     }
 
+    private float dX = 0;
+
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder,
                             float dX, float dY, int actionState, boolean isCurrentlyActive) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+            this.dX = dX;
             viewHolder.itemView.scrollTo(-(int) dX, 0);
         } else {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
